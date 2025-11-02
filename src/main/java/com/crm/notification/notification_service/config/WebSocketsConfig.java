@@ -1,5 +1,6 @@
-package com.crm.notification.notification_service.config.websocket;
+package com.crm.notification.notification_service.config;
 
+import com.crm.notification.notification_service.websocket.StompAuthChannelInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
