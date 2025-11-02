@@ -4,7 +4,6 @@ import com.crm.notification.notification_service.feign.AuthClient;
 import com.crm.sharedlib.dto.response.AuthResponse;
 import com.crm.sharedlib.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -18,7 +17,6 @@ import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class StompAuthChannelInterceptor implements ChannelInterceptor {
 
     private final AuthClient authClient;
@@ -40,8 +38,6 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
         String authorizationHeader = accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION);
 
         AuthResponse response = authClient.authorize(authorizationHeader);
-
-        log.warn("User ID {}", response.getId());
 
         accessor.setUser(() -> response.getId().toString());
         accessor.setLeaveMutable(true);
