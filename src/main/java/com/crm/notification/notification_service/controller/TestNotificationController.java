@@ -4,12 +4,18 @@ import com.crm.notification.notification_service.dto.request.TestMessageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUser;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/test/notifications")
 @RequiredArgsConstructor
 public class TestNotificationController {
+
+    private final SimpUserRegistry simpUserRegistry;
 
     private final SimpMessagingTemplate template;
 
@@ -29,6 +35,11 @@ public class TestNotificationController {
             @RequestBody TestMessageRequest request
     ) {
         template.convertAndSend("/topic/organizations/%d/notifications".formatted(organizationId), request.getMessage());
+    }
+
+    @GetMapping("/users")
+    public Set<SimpUser> getAllUsers() {
+        return simpUserRegistry.getUsers();
     }
 
 }
