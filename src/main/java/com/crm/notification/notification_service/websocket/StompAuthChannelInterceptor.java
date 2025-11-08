@@ -35,21 +35,24 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
 
     }
 
-
     private Message<?> handleConnectMessage(Message<?> message, StompHeaderAccessor accessor) {
         String authorizationHeader = accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION);
 
-        AuthResponse response = authClient.authorize(authorizationHeader);
+        try {
+            AuthResponse response = authClient.authorize(authorizationHeader);
 
-        accessor.setUser(() -> response.getId().toString());
-        accessor.setLeaveMutable(true);
+            accessor.setUser(() -> response.getId().toString());
+            accessor.setLeaveMutable(true);
+        } catch (UnauthorizedException e) {
+            return null;
+        }
 
         return MessageBuilder.createMessage(message.getPayload(), accessor.getMessageHeaders());
     }
 
     private Message<?> handleSubscribeMessage(Message<?> message, StompHeaderAccessor accessor) {
         if (isNull(accessor.getUser())) {
-            throw new UnauthorizedException("Unauthorized");
+            return null;
         }
 
         return MessageBuilder.createMessage(message.getPayload(), accessor.getMessageHeaders());

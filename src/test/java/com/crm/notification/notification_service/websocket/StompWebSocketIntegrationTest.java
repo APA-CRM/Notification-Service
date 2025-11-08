@@ -127,8 +127,8 @@ public class StompWebSocketIntegrationTest extends BaseIntegrationTest {
         StompSession session = null;
         try {
             session = f.get(CONNECT_TIMEOUT.toMillis(), TimeUnit.MILLISECONDS);
-        } catch (ExecutionException ee) {
-            assertNotNull(ee.getCause());
+        } catch (TimeoutException ee) {
+            //  Message has been ignored because of the error
             return;
         }
 
