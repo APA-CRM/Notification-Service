@@ -9,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -24,38 +22,30 @@ public class NotificationSender {
     public void sendNotification(CrmNotification notification) {
         CrmRecipient recipient = notification.getRecipient();
         switch (recipient.getType()) {
-            case USER -> sendMessageToUser(
-                    recipient.getId(), notification.getMessage(),
-                    notification.getDetails()
-            );
-            case ORGANIZATION -> sendMessageToOrganization(
-                    recipient.getId(), notification.getMessage(),
-                    notification.getDetails()
-            );
+            case USER -> sendMessageToUser(recipient.getId(), notification.getMessage());
+            case ORGANIZATION -> sendMessageToOrganization(recipient.getId(), notification.getMessage());
             default -> throw new IllegalArgumentException("Unknow type of recipient " + recipient.getType());
         }
     }
 
     public void sendMessageToUser(
-            Long userId, CrmMessage message,
-            Map<String, Object> details
+            Long userId, CrmMessage message
     ) {
-        log.debug("Sending a message to user {} with message type {}", userId, message.getMessageType());
+        log.debug("Sending a message to user {} with message code {}", userId, message.getCode());
 
         NotificationResponse response =
-                new NotificationResponse(message.getMessageType(), message.getMessage(), details);
+                new NotificationResponse(message.getCode(), message.getMessage(), message.getDetails());
 
         template.convertAndSendToUser(userId.toString(), USER_NOTIFICATIONS_TOPIC, response);
     }
 
     public void sendMessageToOrganization(
-            Long organizationId, CrmMessage message,
-            Map<String, Object> details
+            Long organizationId, CrmMessage message
     ) {
-        log.debug("Sending a message to organization {} with message type {}", organizationId, message.getMessageType());
+        log.debug("Sending a message to organization {} with message code {}", organizationId, message.getCode());
 
         NotificationResponse response =
-                new NotificationResponse(message.getMessageType(), message.getMessage(), details);
+                new NotificationResponse(message.getCode(), message.getMessage(), message.getDetails());
 
         template.convertAndSend(ORGANIZATION_NOTIFICATIONS_TOPIC.formatted(organizationId), response);
     }

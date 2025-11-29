@@ -13,7 +13,7 @@ import java.util.Map;
 @Setter
 public class NotificationResponse {
 
-    private String messageType;
+    private String messageCode;
 
     private String message;
 

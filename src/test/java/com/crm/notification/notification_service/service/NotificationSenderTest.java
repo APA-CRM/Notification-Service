@@ -115,7 +115,7 @@ class NotificationSenderTest extends BaseIntegrationTest {
         Thread.sleep(500);
 
         CrmNotification notification = CrmNotification.builder()
-                .message(new CrmMessage("HELLO_WORLD", "Hello World!"))
+                .message(new CrmMessage("HELLO_WORLD", "Hello World!", null))
                 .recipient(new CrmRecipient(1L, RecipientType.ORGANIZATION))
                 .build();
 
@@ -126,7 +126,7 @@ class NotificationSenderTest extends BaseIntegrationTest {
                 TimeUnit.MILLISECONDS
         );
 
-        assertEquals(notification.getMessage().getMessageType(), receivedMessage.getMessageType());
+        assertEquals(notification.getMessage().getCode(), receivedMessage.getMessageCode());
         assertEquals(notification.getMessage().getMessage(), receivedMessage.getMessage());
 
         session.disconnect();
