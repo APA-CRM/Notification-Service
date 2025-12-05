@@ -4,12 +4,12 @@ import com.crm.notification.notification_service.BaseIntegrationTest;
 import com.crm.notification.notification_service.dto.response.NotificationResponse;
 import com.crm.notification.notification_service.feign.AuthClient;
 import com.crm.notification.notification_service.feign.MainClient;
-import com.crm.sharedlib.dto.CrmMessage;
-import com.crm.sharedlib.dto.CrmNotification;
-import com.crm.sharedlib.dto.CrmRecipient;
-import com.crm.sharedlib.dto.response.AuthResponse;
-import com.crm.sharedlib.dto.response.UserExistsInOrganizationResponse;
-import com.crm.sharedlib.enums.RecipientType;
+import com.crm.sharedlib.core.dto.response.AuthResponse;
+import com.crm.sharedlib.core.dto.response.UserExistsInOrganizationResponse;
+import com.crm.sharedlib.messaging.dto.CrmMessage;
+import com.crm.sharedlib.messaging.dto.CrmNotification;
+import com.crm.sharedlib.messaging.dto.CrmRecipient;
+import com.crm.sharedlib.messaging.enums.RecipientType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -115,7 +115,7 @@ class NotificationSenderTest extends BaseIntegrationTest {
         Thread.sleep(500);
 
         CrmNotification notification = CrmNotification.builder()
-                .message(new CrmMessage("HELLO_WORLD", "Hello World!", null))
+                .message(new CrmMessage("Title", "HELLO_WORLD", "Hello World!", null))
                 .recipient(new CrmRecipient(1L, RecipientType.ORGANIZATION))
                 .build();
 
@@ -126,6 +126,7 @@ class NotificationSenderTest extends BaseIntegrationTest {
                 TimeUnit.MILLISECONDS
         );
 
+        assertEquals(notification.getMessage().getTitle(), receivedMessage.getTitle());
         assertEquals(notification.getMessage().getCode(), receivedMessage.getMessageCode());
         assertEquals(notification.getMessage().getMessage(), receivedMessage.getMessage());
 

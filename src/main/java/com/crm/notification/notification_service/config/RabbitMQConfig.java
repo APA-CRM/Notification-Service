@@ -1,13 +1,13 @@
 package com.crm.notification.notification_service.config;
 
-import com.crm.sharedlib.config.BaseRabbitMQConfig;
+import com.crm.sharedlib.messaging.config.BaseRabbitMQConfig;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static com.crm.sharedlib.consts.CrmConstants.*;
+import static com.crm.sharedlib.messaging.constants.RabbitMQConstants.*;
 
 @Configuration
 @EnableRabbit

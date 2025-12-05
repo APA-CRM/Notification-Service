@@ -3,13 +3,13 @@ package com.crm.notification.notification_service.service.consumer;
 
 import com.crm.notification.notification_service.service.email.EmailService;
 import com.crm.notification.notification_service.service.email.TemplateBuilder;
-import com.crm.sharedlib.dto.amqp.SendPasswordByEmailEvent;
+import com.crm.sharedlib.core.dto.amqp.SendPasswordByEmailEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
-import static com.crm.sharedlib.consts.CrmConstants.SEND_PASSWORD_QUEUE;
+import static com.crm.sharedlib.messaging.constants.RabbitMQConstants.SEND_PASSWORD_QUEUE;
 
 @Service
 @RequiredArgsConstructor
