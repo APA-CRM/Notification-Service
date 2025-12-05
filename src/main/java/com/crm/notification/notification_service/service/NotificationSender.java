@@ -1,9 +1,9 @@
 package com.crm.notification.notification_service.service;
 
 import com.crm.notification.notification_service.dto.response.NotificationResponse;
-import com.crm.sharedlib.dto.CrmMessage;
-import com.crm.sharedlib.dto.CrmNotification;
-import com.crm.sharedlib.dto.CrmRecipient;
+import com.crm.sharedlib.messaging.dto.CrmMessage;
+import com.crm.sharedlib.messaging.dto.CrmNotification;
+import com.crm.sharedlib.messaging.dto.CrmRecipient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -34,7 +34,10 @@ public class NotificationSender {
         log.debug("Sending a message to user {} with message code {}", userId, message.getCode());
 
         NotificationResponse response =
-                new NotificationResponse(message.getCode(), message.getMessage(), message.getDetails());
+                new NotificationResponse(
+                        message.getTitle(), message.getCode(),
+                        message.getMessage(), message.getDetails()
+                );
 
         template.convertAndSendToUser(userId.toString(), USER_NOTIFICATIONS_TOPIC, response);
     }
@@ -45,7 +48,10 @@ public class NotificationSender {
         log.debug("Sending a message to organization {} with message code {}", organizationId, message.getCode());
 
         NotificationResponse response =
-                new NotificationResponse(message.getCode(), message.getMessage(), message.getDetails());
+                new NotificationResponse(
+                        message.getTitle(), message.getCode(),
+                        message.getMessage(), message.getDetails()
+                );
 
         template.convertAndSend(ORGANIZATION_NOTIFICATIONS_TOPIC.formatted(organizationId), response);
     }

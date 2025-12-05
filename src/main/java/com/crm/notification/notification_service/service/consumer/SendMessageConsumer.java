@@ -1,14 +1,14 @@
 package com.crm.notification.notification_service.service.consumer;
 
 import com.crm.notification.notification_service.service.NotificationSender;
-import com.crm.sharedlib.dto.CrmNotification;
+import com.crm.sharedlib.messaging.dto.CrmNotification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
-import static com.crm.sharedlib.consts.CrmConstants.SEND_MESSAGE_QUEUE;
+import static com.crm.sharedlib.messaging.constants.RabbitMQConstants.SEND_MESSAGE_QUEUE;
 
 @Service
 @RequiredArgsConstructor

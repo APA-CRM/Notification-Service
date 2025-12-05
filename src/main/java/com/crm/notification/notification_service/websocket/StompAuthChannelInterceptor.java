@@ -2,10 +2,10 @@ package com.crm.notification.notification_service.websocket;
 
 import com.crm.notification.notification_service.feign.AuthClient;
 import com.crm.notification.notification_service.feign.MainClient;
-import com.crm.sharedlib.dto.response.AuthResponse;
-import com.crm.sharedlib.dto.response.UserExistsInOrganizationResponse;
-import com.crm.sharedlib.exception.ForbiddenException;
-import com.crm.sharedlib.exception.UnauthorizedException;
+import com.crm.sharedlib.core.dto.response.AuthResponse;
+import com.crm.sharedlib.core.dto.response.UserExistsInOrganizationResponse;
+import com.crm.sharedlib.core.exception.ForbiddenException;
+import com.crm.sharedlib.core.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.messaging.Message;
