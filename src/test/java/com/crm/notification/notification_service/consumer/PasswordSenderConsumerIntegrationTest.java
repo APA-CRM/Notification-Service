@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+// TODO: Add RabbitMQ Testcontainers
 class PasswordSenderConsumerIntegrationTest extends BaseIntegrationTest {
 
     @MockitoBean
