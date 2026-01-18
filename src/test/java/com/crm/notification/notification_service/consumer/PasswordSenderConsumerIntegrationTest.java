@@ -2,7 +2,7 @@ package com.crm.notification.notification_service.consumer;
 
 import com.crm.notification.notification_service.BaseIntegrationTest;
 import com.crm.notification.notification_service.service.consumer.PasswordSenderConsumer;
-import com.crm.sharedlib.core.dto.amqp.SendPasswordByEmailEvent;
+import com.crm.sharedlib.messaging.dto.amqp.SendPasswordByEmailMessage;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class PasswordSenderConsumerIntegrationTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Verification of the method when sending a password to user by email expected success")
     void sendPasswordToUserExpectedSuccess() {
-        SendPasswordByEmailEvent message = new SendPasswordByEmailEvent();
+        SendPasswordByEmailMessage message = new SendPasswordByEmailMessage();
         message.setEmail("test@local");
         message.setPassword("123456");
 

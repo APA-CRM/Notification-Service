@@ -3,7 +3,7 @@ package com.crm.notification.notification_service.service.consumer;
 
 import com.crm.notification.notification_service.service.email.EmailService;
 import com.crm.notification.notification_service.service.email.TemplateBuilder;
-import com.crm.sharedlib.core.dto.amqp.SendPasswordByEmailEvent;
+import com.crm.sharedlib.messaging.dto.amqp.SendPasswordByEmailMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -16,18 +16,19 @@ import static com.crm.sharedlib.messaging.constants.RabbitMQConstants.SEND_PASSW
 @Slf4j
 public class PasswordSenderConsumer {
 
-    private final EmailService emailService;
+    private static final String SUBJECT = "🔐Your Generated Password!";
 
+    private final EmailService emailService;
     private final TemplateBuilder templateBuilder;
 
     @RabbitListener(queues = SEND_PASSWORD_QUEUE)
-    public void sendPassword(SendPasswordByEmailEvent message) {
+    public void sendPassword(SendPasswordByEmailMessage message) {
         log.info("Sending email with password to user");
 
-        String subject = "🔐Your Generated Password!";
+
         String text = templateBuilder.buildPasswordEmail(message.getPassword());
 
-        emailService.sendEmail(message.getEmail(), text, subject);
+        emailService.sendEmail(message.getEmail(), text, SUBJECT);
 
     }
 

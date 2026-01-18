@@ -2,7 +2,7 @@ package com.crm.notification.notification_service.consumer;
 
 import com.crm.notification.notification_service.BaseIntegrationTest;
 import com.crm.notification.notification_service.service.consumer.SendInvitationOfOrganizationConsumer;
-import com.crm.sharedlib.core.dto.amqp.SendInvitationOfOrganizationEvent;
+import com.crm.sharedlib.messaging.dto.amqp.SendInvitationOfOrganizationMessage;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class SendInvitationOfOrganizationConsumerTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Verification of the method when sending an invitation to user expected success")
     void sendInvitationOfOrganizationToUserThenSuccess() {
-        SendInvitationOfOrganizationEvent event = new SendInvitationOfOrganizationEvent();
+        SendInvitationOfOrganizationMessage event = new SendInvitationOfOrganizationMessage();
 
         event.setEmail("test@local");
         event.setOrganizationName("TestOrganization");

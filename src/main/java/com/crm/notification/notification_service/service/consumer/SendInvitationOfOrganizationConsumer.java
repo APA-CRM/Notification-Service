@@ -2,7 +2,7 @@ package com.crm.notification.notification_service.service.consumer;
 
 import com.crm.notification.notification_service.service.email.EmailService;
 import com.crm.notification.notification_service.service.email.TemplateBuilder;
-import com.crm.sharedlib.core.dto.amqp.SendInvitationOfOrganizationEvent;
+import com.crm.sharedlib.messaging.dto.amqp.SendInvitationOfOrganizationMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -16,6 +16,8 @@ import static com.crm.sharedlib.messaging.constants.RabbitMQConstants.SEND_INVIT
 @Slf4j
 public class SendInvitationOfOrganizationConsumer {
 
+    private static final String SUBJECT = "Invitation to Join Organization";
+
     private final EmailService emailService;
     private final TemplateBuilder templateBuilder;
 
@@ -23,7 +25,7 @@ public class SendInvitationOfOrganizationConsumer {
     private String frontEndUrl;
 
     @RabbitListener(queues = SEND_INVITATION_OF_ORGANIZATION)
-    public void sendInvitationOfOrganizationToUser(SendInvitationOfOrganizationEvent event) {
+    public void sendInvitationOfOrganizationToUser(SendInvitationOfOrganizationMessage event) {
         log.debug("Sending invitation {} to user", event.getInvitationId());
 
         String text = templateBuilder
@@ -32,7 +34,7 @@ public class SendInvitationOfOrganizationConsumer {
                         event.getOrganizationName(), frontEndUrl
                 );
 
-        emailService.sendEmail(event.getEmail(), text, "Invitation to Join Organization");
+        emailService.sendEmail(event.getEmail(), text, SUBJECT);
     }
 
 }
