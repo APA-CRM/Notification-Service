@@ -34,4 +34,11 @@ public class RabbitMQConfig extends BaseRabbitMQConfig {
                 .build();
     }
 
+    @Bean
+    public Queue sendVerificationCodeQueue() {
+        return QueueBuilder
+                .durable(SEND_VERIFICATION_CODE_QUEUE)
+                .build();
+    }
+
 }

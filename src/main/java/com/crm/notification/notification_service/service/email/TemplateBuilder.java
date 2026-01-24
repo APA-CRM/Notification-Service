@@ -20,8 +20,16 @@ public class TemplateBuilder {
         context.setVariable("password", password);
 
         return templateEngine.process("passwordEmailTemplate", context);
-
     }
+
+    public String buildVerificationCodeEmail(String verificationCode) {
+
+        Context context = new Context();
+        context.setVariable("verificationCode", verificationCode);
+
+        return templateEngine.process("verificationCodeEmailTemplate", context);
+    }
+
 
     public String buildInvitationEmail(UUID invitationId, String organizationName, String frontendUrl) {
         Context context = new Context();
