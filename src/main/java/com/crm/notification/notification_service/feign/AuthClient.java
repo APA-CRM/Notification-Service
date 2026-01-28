@@ -7,7 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(value = "auth-service", configuration = FeignClientConfig.class)
+@FeignClient(name = "${app.clients.auth-service.name}", configuration = FeignClientConfig.class)
 public interface AuthClient {
 
     @GetMapping("/api/auth/authorize")
