@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 // TODO: Add RabbitMQ Testcontainers
 class PasswordSenderConsumerIntegrationTest extends BaseIntegrationTest {
 
-    @MockitoBean
+    @MockitoSpyBean
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -27,8 +27,11 @@ class PasswordSenderConsumerIntegrationTest extends BaseIntegrationTest {
         message.setEmail("test@local");
         message.setPassword("123456");
 
-        Mockito.when(javaMailSender.createMimeMessage())
-                .thenReturn(Mockito.mock(MimeMessage.class));
+        Mockito.doNothing().when(javaMailSender)
+                .send(Mockito.any(MimeMessage.class));
+
+        Mockito.doReturn(Mockito.mock(MimeMessage.class)).when(javaMailSender)
+                .createMimeMessage();
 
         consumer.sendPassword(message);
 

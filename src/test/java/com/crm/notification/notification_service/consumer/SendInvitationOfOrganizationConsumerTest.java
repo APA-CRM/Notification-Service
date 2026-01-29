@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import java.util.UUID;
 
 // TODO: Add RabbitMQ Testcontainers
 class SendInvitationOfOrganizationConsumerTest extends BaseIntegrationTest {
 
-    @MockitoBean
+    @MockitoSpyBean
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -31,8 +31,11 @@ class SendInvitationOfOrganizationConsumerTest extends BaseIntegrationTest {
         event.setOrganizationName("TestOrganization");
         event.setInvitationId(UUID.randomUUID());
 
-        Mockito.when(javaMailSender.createMimeMessage())
-                .thenReturn(Mockito.mock(MimeMessage.class));
+        Mockito.doNothing().when(javaMailSender)
+                .send(Mockito.any(MimeMessage.class));
+
+        Mockito.doReturn(Mockito.mock(MimeMessage.class)).when(javaMailSender)
+                .createMimeMessage();
 
         consumer.sendInvitationOfOrganizationToUser(event);
 
