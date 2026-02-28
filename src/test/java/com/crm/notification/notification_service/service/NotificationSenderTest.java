@@ -31,7 +31,6 @@ import java.util.concurrent.TimeoutException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class NotificationSenderTest extends BaseIntegrationTest {
@@ -59,8 +58,8 @@ class NotificationSenderTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Connect to WebSockets and receive message")
     public void connectAndSubscribeToOrganizationNotificationExpectedSuccess() throws Exception {
-        when(authClient.authorize(anyString()))
-                .thenReturn(new AuthResponse(1, ""));
+        when(authClient.authorize(any()))
+                .thenReturn(new AuthResponse(1L, ""));
 
         when(mainClient.isUserExistsInOrganization(anyLong(), anyLong()))
                 .thenReturn(new UserExistsInOrganizationResponse(true));

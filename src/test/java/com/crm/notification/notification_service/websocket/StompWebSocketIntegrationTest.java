@@ -25,7 +25,6 @@ import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class StompWebSocketIntegrationTest extends BaseIntegrationTest {
@@ -50,7 +49,7 @@ public class StompWebSocketIntegrationTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Connect with authorization token expected success")
     public void connectWithAuthorizationExpectedSuccess() throws Exception {
-        when(authClient.authorize(anyString())).thenReturn(new AuthResponse(1, ""));
+        when(authClient.authorize(any())).thenReturn(new AuthResponse(1L, ""));
 
         String url = "ws://localhost:" + localServerPort + "/ws-notifications";
 
@@ -97,8 +96,8 @@ public class StompWebSocketIntegrationTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Connect with authorization token expected success")
     public void connectAndSubscribeToOrganizationNotificationExpectedSuccess() throws Exception {
-        when(authClient.authorize(anyString()))
-                .thenReturn(new AuthResponse(1, ""));
+        when(authClient.authorize(any()))
+                .thenReturn(new AuthResponse(1L, ""));
 
         when(mainClient.isUserExistsInOrganization(anyLong(), anyLong()))
                 .thenReturn(new UserExistsInOrganizationResponse(true));

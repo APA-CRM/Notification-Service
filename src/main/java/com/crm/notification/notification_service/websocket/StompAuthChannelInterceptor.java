@@ -1,11 +1,12 @@
 package com.crm.notification.notification_service.websocket;
 
-import com.crm.notification.notification_service.feign.AuthClient;
 import com.crm.notification.notification_service.feign.MainClient;
+import com.crm.notification.notification_service.service.wrapper.AuthClientWrapper;
 import com.crm.sharedlib.core.dto.response.AuthResponse;
 import com.crm.sharedlib.core.dto.response.UserExistsInOrganizationResponse;
 import com.crm.sharedlib.core.exception.ForbiddenException;
 import com.crm.sharedlib.core.exception.UnauthorizedException;
+import com.crm.sharedlib.core.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.messaging.Message;
@@ -16,6 +17,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,7 +31,7 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
     private final static Pattern ORGANIZATION_NOTIFICATION_TOPIC_PATTERN =
             Pattern.compile("^/topic/organizations/(?<organizationId>\\d+)/notifications$");
 
-    private final AuthClient authClient;
+    private final AuthClientWrapper authClientWrapper;
     private final MainClient mainClient;
 
     @Override
@@ -49,7 +51,8 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
         String authorizationHeader = accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION);
 
         try {
-            AuthResponse response = authClient.authorize(authorizationHeader);
+            Optional<String> accessToken = JwtUtils.getJwtTokenFromAuthorizationHeader(authorizationHeader);
+            AuthResponse response = authClientWrapper.authorize(accessToken.get());
 
             accessor.setUser(() -> response.getId().toString());
             accessor.setLeaveMutable(true);
