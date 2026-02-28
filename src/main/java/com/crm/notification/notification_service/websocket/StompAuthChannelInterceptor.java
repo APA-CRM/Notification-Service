@@ -52,7 +52,7 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
 
         try {
             Optional<String> accessToken = JwtUtils.getJwtTokenFromAuthorizationHeader(authorizationHeader);
-            AuthResponse response = authClientWrapper.authorize(accessToken.get());
+            AuthResponse response = authClientWrapper.authorize(accessToken.orElse(null));
 
             accessor.setUser(() -> response.getId().toString());
             accessor.setLeaveMutable(true);
