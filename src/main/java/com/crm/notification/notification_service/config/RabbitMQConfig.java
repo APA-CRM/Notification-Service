@@ -23,7 +23,7 @@ public class RabbitMQConfig extends BaseRabbitMQConfig {
     @Bean
     public Queue sendInvitationOfOrganizationQueue() {
         return QueueBuilder
-                .durable(SEND_INVITATION_OF_ORGANIZATION)
+                .durable(SEND_INVITATION_OF_ORGANIZATION_ROUTING_KEY)
                 .build();
     }
 
@@ -38,6 +38,13 @@ public class RabbitMQConfig extends BaseRabbitMQConfig {
     public Queue sendVerificationCodeQueue() {
         return QueueBuilder
                 .durable(SEND_VERIFICATION_CODE_QUEUE)
+                .build();
+    }
+
+    @Bean
+    public Queue taskReminderQueue() {
+        return QueueBuilder
+                .durable(REMIND_ABOUT_TASK_QUEUE)
                 .build();
     }
 

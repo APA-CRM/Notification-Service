@@ -8,12 +8,20 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
     private final JavaMailSender mailSender;
+
+    public void sendEmail(List<String> to, String text, String subject) {
+        for (String email : to) {
+            sendEmail(email, text, subject);
+        }
+    }
 
     public void sendEmail(String to, String text, String subject) {
         MimeMessage message = mailSender.createMimeMessage();
