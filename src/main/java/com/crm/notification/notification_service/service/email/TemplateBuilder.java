@@ -51,6 +51,9 @@ public class TemplateBuilder {
         context.setVariable("title", message.getTitle());
         context.setVariable("taskId", message.getTaskId());
 
+        context.setVariable("organizationId", message.getOrganizationId());
+        context.setVariable("organizationName", message.getOrganizationName());
+
         context.setVariable("statusName", message.getStatus().getName());
         context.setVariable("statusColor", message.getStatus().getColor());
 
