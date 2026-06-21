@@ -34,11 +34,11 @@ public class EmailService {
 
             mailSender.send(message);
         } catch (MessagingException e) {
-            log.error("Something went wrong while sending email", e);
+            log.error("Something went wrong while sending email to {} with subject {}", to, subject, e);
             throw new RuntimeException(e);
         }
 
 
-        log.info("Email successfully sent");
+        log.debug("Email successfully sent to {} with subject {}", to, subject);
     }
 }
