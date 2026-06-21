@@ -138,8 +138,8 @@
             <div class="task-info">
                 <strong>Status:</strong>
                 <span class="status-badge"
-                      th:style="'background-color:' + ${status.color}"
-                      th:text="${status.name}">
+                      th:style="'background-color:' + ${statusColor}"
+                      th:text="${statusName}">
                     In Progress
                 </span>
             </div>
@@ -147,8 +147,8 @@
             <div class="task-info">
                 <strong>Priority:</strong>
                 <span class="priority-badge"
-                      th:style="'background-color:' + ${priority.color}"
-                      th:text="${priority.name}">
+                      th:style="'background-color:' + ${priorityColor}"
+                      th:text="${priorityName}">
                     High
                 </span>
             </div>

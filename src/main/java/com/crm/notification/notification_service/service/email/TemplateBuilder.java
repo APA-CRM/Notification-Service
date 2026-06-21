@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -50,15 +51,18 @@ public class TemplateBuilder {
         context.setVariable("title", message.getTitle());
         context.setVariable("taskId", message.getTaskId());
 
-        context.setVariable("status.name", message.getStatus().getName());
-        context.setVariable("status.color", message.getStatus().getColor());
+        context.setVariable("statusName", message.getStatus().getName());
+        context.setVariable("statusColor", message.getStatus().getColor());
 
         context.setVariable("frontendUrl", frontendUrl);
 
-        context.setVariable("priority.name", message.getPriority().getName());
-        context.setVariable("priority.color", message.getPriority().getColor());
+        context.setVariable("priorityName", message.getPriority().getName());
+        context.setVariable("priorityColor", message.getPriority().getColor());
+
+        // TODO: For each user should be used different Zone ID
         if (nonNull(message.getDueDate())) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+                    .withZone(ZoneId.of("Europe/Kyiv"));
 
             context.setVariable("dueDate", formatter.format(message.getDueDate()));
         }
