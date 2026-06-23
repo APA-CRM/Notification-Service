@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task Reminder</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #ffd180, #ffb74d);
+            border-radius: 12px 12px 0 0;
+            padding: 24px;
+            text-align: center;
+            color: #e65100;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px 20px 10px;
+        }
+
+        .content p {
+            margin: 10px 0;
+        }
+
+        .task-block {
+            display: inline-block;
+            background: #fff8e1;
+            border: 2px solid #ffb74d;
+            border-radius: 12px;
+            padding: 20px 32px;
+            margin-top: 12px;
+            color: #5d4037;
+            box-shadow: 0 2px 6px rgba(255, 183, 77, 0.15);
+            min-width: 300px;
+        }
+
+        .task-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #e65100;
+        }
+
+        .task-info {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .task-info strong {
+            color: #333;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background: #ff9800;
+            color: #fff !important;
+            padding: 14px 32px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 24px 0 10px;
+            box-shadow: 0 2px 6px rgba(255, 152, 0, 0.18);
+        }
+
+        .action-btn:hover {
+            background: #f57c00;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 16px;
+        }
+
+        .note {
+            color: #ff9800;
+            margin-top: 20px;
+        }
+
+        .status-badge,
+        .priority-badge {
+            display: inline-block;
+            color: black;
+            border-radius: 12px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+
+    <div class="header">
+        Task Reminder
+    </div>
+
+    <div class="content">
+
+        <h2>Hello!</h2>
+
+        <p>This is a reminder about an active task in APA-CRM.</p>
+
+        <div class="task-block">
+
+            <div class="task-title" th:text="${title}">
+                Task Title
+            </div>
+
+            <div class="task-info">
+                <strong>Organization:</strong>
+                <span th:text="${organizationName}">Organization</span>
+            </div>
+
+            <div class="task-info">
+                <strong>Status:</strong>
+                <span class="status-badge"
+                      th:style="'background-color:' + ${statusColor}"
+                      th:text="${statusName}">
+                    In Progress
+                </span>
+            </div>
+
+            <div class="task-info">
+                <strong>Priority:</strong>
+                <span class="priority-badge"
+                      th:style="'background-color:' + ${priorityColor}"
+                      th:text="${priorityName}">
+                    High
+                </span>
+            </div>
+
+            <div class="task-info" th:if="${dueDate != null}">
+                <strong>Due Date:</strong>
+                <span th:text="${dueDate}">
+                    20.06.2026 18:00
+                </span>
+            </div>
+
+        </div>
+
+        <br/>
+
+        <a class="action-btn"
+           th:href="@{${frontendUrl} + '/tasks/' + ${taskId}}">
+            Open Task
+        </a>
+
+        <p class="note">
+            Please review and update this task if any action is required.
+        </p>
+
+    </div>
+
+    <div class="footer">
+        © 2026 APA-CRM • This is an automatic reminder message
+    </div>
+
+</div>
+</body>
+</html>

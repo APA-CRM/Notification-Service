@@ -9,7 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import static com.crm.sharedlib.messaging.constants.RabbitMQConstants.SEND_INVITATION_OF_ORGANIZATION;
+import static com.crm.sharedlib.messaging.constants.RabbitMQConstants.SEND_INVITATION_OF_ORGANIZATION_ROUTING_KEY;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class SendInvitationOfOrganizationConsumer {
     @Value("${app.frontend.url}")
     private String frontEndUrl;
 
-    @RabbitListener(queues = SEND_INVITATION_OF_ORGANIZATION)
+    @RabbitListener(queues = SEND_INVITATION_OF_ORGANIZATION_ROUTING_KEY)
     public void sendInvitationOfOrganizationToUser(SendInvitationOfOrganizationMessage event) {
         log.debug("Sending invitation {} to user", event.getInvitationId());
 
